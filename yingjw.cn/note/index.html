@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>note</title>
+  <style>
+    body {
+      background: #FAF9DE;
+    }
+
+    textarea {
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      border: 0;
+      outline: 0;
+      font-size: 25px;
+      color: #555;
+      font-family: Arial, sans-serif;
+      padding: 10px;
+      background: unset;
+      box-sizing: border-box;
+    }
+
+    select {
+      position: fixed;
+      right: 8px;
+      bottom: 8px;
+      font-size: 18px;
+      border: 0;
+      background: unset;
+      outline: 0;
+      color: #444;
+      text-align-last: right;
+    }
+  </style>
+</head>
+
+<body>
+  <textarea></textarea>
+  <select value="bark">
+    <option value="bark">Bark</option>
+    <option value="pushDeer">pushDeer</option>
+  </select>
+  <script>
+
+    const pushData = (url, data) => fetch(url, {
+      method: 'post',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8'
+      },
+      body: JSON.stringify(data)
+    })
+
+    let pushType = localStorage.getItem('pushType') || 'bark'
+
+    const txtArea = document.querySelector('textarea')
+    const pushSel = document.querySelector('select')
+
+    pushSel.querySelectorAll('option').forEach((e) => {
+      if (e.value === pushType) e.selected = true
+    })
+
+    txtArea.value = localStorage.getItem('txtVal')
+
+    const sendMessage = () => {
+      const txtVal = txtArea.value
+      localStorage.setItem('txtVal', txtVal)
+      if (pushType === 'bark') {
+        pushData('/api.day.app/push', {
+          title: 'note',
+          body: txtVal,
+          device_key: 'aNiqWRkzhEX4G2SR949KeH',
+          copy: 'test'
+        })
+      } else {
+        pushData('/api2.pushdeer.com/message/push', {
+          text: 'note',
+          desp: txtVal,
+          pushkey: 'PDU6830Tpvi4XxOm8McBXdjGjM64FGweeaD2WVRR',
+          type: 'text'
+        })
+      }
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.keyCode == 83 && (navigator.platform.match('Mac') ? e.metaKey : e.ctrlKey)) {
+        e.preventDefault()
+        sendMessage()
+      }
+    }, false);
+
+    txtArea.addEventListener('blur', (e) => {
+      sendMessage()
+    })
+
+    pushSel.addEventListener('change', (e) => {
+      const index = e.target.selectedIndex
+      pushType = e.target[index].value
+      localStorage.setItem('pushType', pushType)
+    })
+
+  </script>
+</body>
+
+</html>
