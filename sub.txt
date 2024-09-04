@@ -1,0 +1,2 @@
+vless://d377575b-ae42-434f-a3ef-3bebe7a59809@proxy.0rz.fun:443?encryption=none&security=tls&sni=proxy.0rz.fun&fp=randomized&type=ws&host=proxy.0rz.fun&path=%2F%3Fed%3D2048#cf
+hysteria2://ying@0rz.win:443?insecure=1&obfs=none#bwg
