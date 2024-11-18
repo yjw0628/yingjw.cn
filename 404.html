@@ -1,26 +1,19 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>404</title>
-<style>
-	body{
-		background-color:#444;
-		font-size:14px;
-	}
-	h3{
-		font-size:60px;
-		color:#eee;
-		text-align:center;
-		padding-top:30px;
-		font-weight:normal;
-	}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
 </head>
-
-<body>
-<h3>404 页面未找到</h3>
+<body style="margin:0;">
+  <iframe src="about:blank" style="width:100vw;height:100vh;border:none;"></iframe>
 </body>
+<script>
+
+  const pathname = location.pathname.slice(1)
+  const index = pathname.indexOf('/')
+  const hostname = pathname.slice(0, index)
+  const targetPath = pathname.slice(index)
+  document.querySelector('iframe').name = `https://${hostname}.yingjw.cn:8002${targetPath}${location.search}`
+</script>
 </html>
